@@ -12,12 +12,18 @@ use Illuminate\Validation\ValidationException;
 class TestController extends Controller
 {
 
-    // Dashboard Endpoint
+    // Agents Endpoint
     public function GetAgents(Request $request)
     {
-        $agents = DB::table('agents')->where('username')->first();
+        $agents = DB::table('agents')
+            ->select('firstname', 'lastname', 'email')
+            ->get(); // fname, lname and email
+        $agentsId = User::select('name', 'email')
+            ->where('name', '!=', 'admin')
+            ->get(); // email and name
         return response([
             'agents' => $agents,
+            'agentsId' => $agentsId
         ]);
     }
 
@@ -70,6 +76,7 @@ class TestController extends Controller
                 'accountNumber' => $request->accountNumber,
                 'category' => $request->category,
                 'date' => $request->date,
+                'dateClosed' => " ",
                 'details' => $request->details,
                 'status' => $request->status,
                 'agent' => $request->agent,
@@ -84,17 +91,25 @@ class TestController extends Controller
     // Update status of a case
     public function UpdateCaseStatus(Request $request)
     {
-        try {
-            DB::table('cases')
-                ->where('id', $request->id)
-                ->update(['status' => $request->status]);
+        DB::table('cases')
+            ->where('id', $request->id)
+            ->update(['status' => $request->status]);
 
-            $case = DB::table('cases')->where('id', $request->id)->first();
+        $case = DB::table('cases')->where('id', $request->id)->first();
 
-            return ([$case]);
-        } catch (\Throwable $th) {
-            throw $th;
-        }
+        return ([$case]);
+    }
+
+    // Update date closed of a case
+    public function UpdateClosed(Request $request)
+    {
+        DB::table('cases')
+            ->where('id', $request->id)
+            ->update(['status' => $request->status, 'dateClosed' => $request->dateClosed]);
+
+        $case = DB::table('cases')->where('id', $request->id)->first();
+
+        return ([$case]);
     }
 
     // Register

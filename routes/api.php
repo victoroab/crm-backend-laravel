@@ -29,6 +29,7 @@ Route::post('/getcase', [TestController::class, 'GetCase']);
 // Mutate Cases
 Route::post('/addcase', [TestController::class, 'AddCase']);
 Route::post('/updstatus', [TestController::class, 'UpdateCaseStatus']);
+Route::post('/updclosed', [TestController::class, 'UpdateClosed']);
 
 // Authentication
 Route::post('/register', [TestController::class, 'Register']);
