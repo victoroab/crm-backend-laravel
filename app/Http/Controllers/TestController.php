@@ -116,6 +116,8 @@ class TestController extends Controller
     public function Register(Request $request)
     {
         $request->validate([
+            'firstname' => 'required',
+            'lastname' => 'required',
             'username' => 'required',
             'password' => 'required',
             'email' => 'required'
@@ -129,7 +131,13 @@ class TestController extends Controller
             'password' => $hashedPwd
         ]);
 
-        return response(['data' => [$request->username, $hashedPwd]]);
+        DB::table('agents')->insert([
+            'firstname' => $request->firstname,
+            'lastname' => $request->lastname,
+            'email' => $request->email
+        ]);
+
+        return response(['data' => [$request->username]]);
     }
 
     // Login
