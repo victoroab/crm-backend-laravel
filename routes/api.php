@@ -42,3 +42,4 @@ Route::middleware('auth:sanctum')->get('/closedcases', [CasesController::class, 
 // Dashboard & Case Management
 Route::middleware('auth:sanctum')->get('/dashboard', [DisplayController::class, 'GetDashboard']);
 Route::middleware('auth:sanctum')->get('/casemanagement', [DisplayController::class, 'GetCaseManagement']);
+Route::get('/accounts', [DisplayController::class, 'GetAccounts']);

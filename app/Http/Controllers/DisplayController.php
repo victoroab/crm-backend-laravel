@@ -31,4 +31,11 @@ class DisplayController extends Controller
 
         return response(['cases' => $cases, 'details' => $realAccounts]);
     }
+
+    public function GetAccounts(Request $request)
+    {
+        $realAccounts = DB::table('account_details_updated__1_')->get();
+
+        return response(['details' => $realAccounts]);
+    }
 }
